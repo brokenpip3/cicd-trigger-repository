@@ -30,9 +30,11 @@ spec:
       limits:
         memory: 250Mi
         cpu: 200m
+        ephemeral-storage: 800Mi
       requests:
         memory: 250Mi
         cpu: 100m
+        ephemeral-storage: 300Mi
     volumeMounts:
       - name: repo-pvc
         mountPath: /srv/repo
