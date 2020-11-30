@@ -50,7 +50,7 @@ spec:
 
 
 parameters {
-        string(name: 'DEBUG', defaultValue: 'no', description: '')}
+        string(name: 'DEBUG', defaultValue: '', description: '')}
 
 stages {
     stage('Check dep') {
@@ -62,7 +62,7 @@ stages {
     stage('Build packages') {
             when {
                 expression {
-                    params.DEBUG ==~ yes
+                    return params.DEBUG
                 }
               }
         steps {

@@ -4,6 +4,8 @@ echo "-- Check one time builded packages and them to pkglist"
 
 sudo pacman -Sy needrelax
 
+pacman -Sl needrelax
+
 pacman -Sl needrelax |awk '{print $2}' > actualpkglist
 
 sort pkglist actualpkglist | uniq > totalpkglist
