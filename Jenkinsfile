@@ -1,6 +1,6 @@
-pipeline {                                                                                                                                                                                                                              
+pipeline {
   triggers {
-        cron('H 03 * * *')
+        cron('H 03 */2 * *')
     }
   agent {
     kubernetes {
@@ -21,7 +21,7 @@ spec:
         cpu: 100m
   - name: aurbuild
     workingDir: /tmp/jenkins
-    image: brokenpip3/dockerbaseciarch:1.4
+    image: brokenpip3/dockerbaseciarch:1.6
     imagePullPolicy: Always
     command:
     - /usr/bin/cat
@@ -42,11 +42,15 @@ spec:
   - name: registry-brokenpip3
   volumes:
   - name: repo-pvc
-    persistentVolumeClaim: 
+    persistentVolumeClaim:
       claimName: repo-pvc
 """
     }
   }
+
+
+parameters {
+        string(name: 'DEBUG', defaultValue: 'no', description: '')}
 
 stages {
     stage('Check dep') {
@@ -54,8 +58,13 @@ stages {
           container('aurbuild') {
             sh './check_dep.sh*'
        }}
-      }   
+      }
     stage('Build packages') {
+            when {
+                expression {
+                    params.DEBUG ==~ yes
+                }
+              }
         steps {
           container('aurbuild') {
             echo 'Updating or add new packages to repo'
@@ -68,11 +77,16 @@ stages {
                     packages["package ${it}"] = {
                         build job: '../cicd-build-aurpkg/master', parameters: [[$class: 'StringParameterValue', name: 'PACKAGENAME', value: "$it"]], wait: false
                     }
-                }                   
+                }
                 parallel packages
             }
         }
     }
 }
 }
+            post {
+              always {
+                cleanWs()
+              }
+            }
 }
