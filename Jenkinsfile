@@ -62,7 +62,7 @@ stages {
     stage('Build packages') {
             when {
                 expression {
-                    return params.DEBUG
+                    return params.DEBUG != 'yes';
                 }
               }
         steps {

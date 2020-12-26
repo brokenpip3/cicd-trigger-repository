@@ -2,7 +2,7 @@
 
 echo "-- Check one time builded packages and them to pkglist"
 
-sudo pacman -Sy needrelax
+sudo pacman -Sy
 
 pacman -Sl needrelax
 
