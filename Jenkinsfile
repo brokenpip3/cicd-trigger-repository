@@ -39,7 +39,7 @@ spec:
       - name: repo-pvc
         mountPath: /srv/repo
   nodeSelector:
-    node-role.kubernetes.io/master: ""
+    owner: brokenpip3
   imagePullSecrets:
   - name: registry-brokenpip3
   volumes:
