@@ -14,26 +14,26 @@ spec:
     workingDir: /tmp/jenkins
     resources:
       limits:
-        memory: 250Mi
-        cpu: 200m
+        memory: 550Mi
+        cpu: 500m
       requests:
-        memory: 250Mi
-        cpu: 100m
+        memory: 550Mi
+        cpu: 200m
   - name: aurbuild
     workingDir: /tmp/jenkins
-    image: brokenpip3/dockerbaseciarch:1.6
+    image: brokenpip3/dockerbaseciarch:2.0
     imagePullPolicy: Always
     command:
     - /usr/bin/cat
     tty: true
     resources:
       limits:
-        memory: 250Mi
-        cpu: 200m
+        memory: 550Mi
+        cpu: 500m
         ephemeral-storage: 800Mi
       requests:
-        memory: 250Mi
-        cpu: 100m
+        memory: 550Mi
+        cpu: 200m
         ephemeral-storage: 300Mi
     volumeMounts:
       - name: repo-pvc
